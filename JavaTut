@@ -1,0 +1,925 @@
+Job ( Tim Buchalka)
+Item and Burger Class with Inheritance and Composition: Job ( Tim Buchalka)
+public class FirstClass {
+    public static void main(String[] args) {
+        Item Coke = new Item("drink", "coke", 1.5);
+        Coke.printItem();
+        Coke.setSize("LARGE");
+        Coke.printItem();
+    }
+}
+
+public class Item {
+    private String type;
+    private String name;
+    private double price;
+    private String size = "MEDIUM";
+
+    public Item(String type, String name, double price){
+        this.type = type.toUpperCase();
+        this.name = name.toUpperCase();
+        this.price = price;
+    }
+
+    public String getName() {
+        if(type.equals("SIDE") || type.equals("DRINK")){
+            return size + " " + name;
+        }
+        return name;
+    }
+    public double getBasePrice() {
+        return price;
+    }
+    public double getAdjustedPrice() {
+        return switch (size){
+            case "SMALL" -> getBasePrice() - 0.5;
+            case "LARGE" -> getBasePrice()  + 1;
+            default -> getBasePrice();
+        };
+    }
+    public void setSize(String size){
+        this.size = size;
+    }
+    public static void printItem(String name, double price) {
+        System.out.printf("%20s:%6.2f%n",name,price   public void printItem(){
+        printItem(getName(),getAdjustedPrice());
+    }
+}
+
+Output generated 
+Medium Coke : 1.5 Large Coke : 2.5
+Burger Class
+
+public class Burger extends Item{
+    private Item extra1;
+    private Item extra2;
+    private Item extra3;
+
+    public Burger(String name, double price) {
+        super("Burger", name, price);
+    }
+
+    @Override
+    public String getName() {
+        return super.getName() + "BURGER";
+    }
+
+    @Override
+    public double getAdjustedPrice() {
+        return getBasePrice() +
+                ((extra1 == null) ? 0 : extra1.getAdjustedPrice()) +
+                ((extra2 == null) ? 0 : extra2.getAdjustedPrice()) +
+                ((extra3 == null) ? 0 : extra3.getAdjustedPrice());
+    }
+    public double getExtraPrice(String toppingName){
+        return switch (toppingName.toUpperCase()){
+            case "AVOCADO", "CHEESE" -> 1.0;
+            case "BACON", "HAM", "SALAMI" -> 1.5;
+            default ->  0.0;
+        };
+    }
+    public void addToppings(String extra1, String extra2, String extra3){
+        this.extra1 = new Item("TOPPING", extra1, getExtraPrice(extra1));
+        this.extra2 = new Item("TOPPING", extra2, getExtraPrice(extra2));
+        this.extra3 = new Item("TOPPING", extra3, getExtraPrice(extra3))
+    }
+   
+   public void printItemizedList() {
+        printItem("BASE BURGER", getBasePrice());
+        if(extra1 != null){
+            extra1.printItem();
+        }
+        if(extra2 != null){
+            extra2.printItem();
+        }
+        if(extra3 != null){
+            extra3.printItem();
+        }
+    }
+
+    @Override
+    public void printItem() {
+        printItemizedList();
+        System.out.println("-".repeat(30
+        super.printItem();
+    }
+}
+
+Burger burger = new Burger("Regular", 4.0);
+burger.addToppings("BACON", "CHEESE", "MAYO");
+burger.printItem();
+
+
+I am calling Burger with three Item variables. When I create the Item in addToppings then I assign the item object to the item variable in the burger class. and I add 4.0 + 1.5 + 1.0 that gives me 6.5
+
+Creating a MealOrder
+
+public class MealOrder {
+    private Burger burger;
+    private Item drink;
+    private Item side;
+    public  MealOrder()
+    {
+        this("regular", "coke", "fries");
+    }
+
+    public MealOrder(String burgerType, String drinkType, String sideType){
+        this.burger = new Burger(burgerType,4.0);
+        this.drink = new Item("drink",drinkType, 1.00);
+        this.side = new Item("side",sideType, 1.50);
+    }
+
+    public double TotalPrice(){
+        return burger.getAdjustedPrice() + drink.getAdjustedPrice() + side.getAdjustedPrice();
+    }
+    public void printItemizedList(){
+        burger.printItem();
+        drink.printItem();
+        side.printItem();
+        System.out.println("-".repeat(30
+        Item.printItem("Total Price",TotalPrice());
+    }
+}
+
+MealOrder regularMeal = new MealOrder();
+regularMeal.printItemizedList();
+
+Output Generated 
+BASE BURGER:  4.00
+------------------------------
+       REGULARBURGER:  4.00
+         MEDIUM COKE:  1.00
+        MEDIUM FRIES:  1.50
+------------------------------
+         Total Price:  6.50
+Creating Package: Job ( Tim Buchalka)
+Src -> new – > package -> dev.lpa. (texturina font) at the top you will find three dots click on it and tree appearance -> uncheck compact middle packages to create package directly src -> new -> textbook -> abc.com.name.Item this will create a Item class with package abc.com.name psvm shorthand for writing public static void main In the lpa file we can create Main class and call Item class and print it
+
+Creating Arrays In Java: Job ( Tim Buchalka)
+int[] myIntArray = new int[10];
+myIntArray[0] = 45;
+myIntArray[1] = 1;
+myIntArray[5] = 50;
+
+double[] myDoubleArray = new double[10];
+myDoubleArray[2] = 3.5;
+System.out.println(myDoubleArray);
+
+int[] firstTen = {1,2,3,4,5,6,7,8,9,10};
+System.out.println("first =" + firstTen[0]);
+
+int arrayLength =  firstTen.length;
+System.out.println("length of array  ="+arrayLength);
+System.out.println("last" + firstTen[arrayLength - 1]);
+
+int [] newArray;
+newArray = new int[] {5,4,3,2,1};
+for (int i =0;i < newArray.length; i++){
+    newArray[I] = newArray.length - i;
+    System.out.println(newArray[i] + " ");
+}
+
+how to write for enhanced loop
+for( int element : newArray)
+{
+    System.out.println(element + " " );
+}
+System.out.println(Arrays.toString(newArray)) 
+will print [5,4,3,2,1] 
+
+Object objectVariable = newArray;
+if(objectVariable instanceOf int[])
+System.out.println("Objectable is really an int array");
+
+Object [] ObjectArray = new Object[3]
+ObjectArray[0] = "Hello";
+ObjectArray[1] = new StringBuilder("World");
+ObjectArray[2] = newArray
+Using Array and Random and Java.util.Array or Java.util.random: Job ( Tim Buchalka)
+public class FirstClass {
+    public static void main(String[] args){
+        int[] firstArray = getRandomArray(10);              
+        System.out.println(
+                 Arrays.toString(firstArray));
+        Arrays.sort(firstArray);     
+        System.out.println(
+                 Arrays.toString(firstArray));
+    }
+    private static int[] getRandomArray(int len){
+        Random random = new Random();
+        int[] newInt = new int[len];
+        for(int i = 0; i < len; i++ ){
+            newInt[i] = random.nextInt(100);
+        }
+        return newInt;
+    }
+}
+
+int[] secondArray = new int[10]
+System.out.println(Arrays.toString(secondArray))
+Arrays.fill(secondArray, val:5)
+System.out.println(Arrays.toString(secondArray))
+output:   [0,0,0,0,0,0,0,0,0,0]
+output:   [5,5,5,5,5,5,5,5,5,5,5,5]
+
+int[] thirdArray = getRandomArray(10);
+System.out.println(Arrays.toString(thirdArray));
+output:  [32, 13, 22, 69, 27, 38, 0, 14, 18, 72]
+
+Arrays.copyto, Arrays.sort , Arrays.binarySearch, Array.equals methods 
+
+int[] fourthArray = Arrays.copyof(thirdArray, thirdArray.length)
+System.out.println(Arrays.toString(fourthArray));
+output:  [79, 32, 85, 17, 70, 71, 72, 58, 44, 73]
+
+Arrays.sort(fourthArray);
+System.out.println(Arrays.toString(thirdArray));
+System.out.println(Arrays.toString(fourthArray));
+output : [23, 27, 57, 1, 91, 84, 51, 62, 53, 12]
+output:  [1, 12, 23, 27, 51, 53, 57, 62, 84, 91]
+
+ String[] sArray = {"Able","Jane", "Mark", "Ralph", "David"};
+Arrays.sort(sArray);
+System.out.println(Arrays.toString(sArray));
+if (Arrays.binarySearch(sArray,"Mark") >= 0){
+       System.out.println("Found on the list");
+ }
+output:  found mark on the list
+
+int[] s1 = {1,2,3,4,5};
+int[] s2 = {1,2,3,4,5};
+if(Arrays.equals(s1,s2)) {
+       System.out.println("Arraysequal");
+} else {
+       System.out.println("Arraysnot equal");
+}
+output: Arrays are equal
+
+if we change the array s2 from 1 to 5 and 5 to 1 it will show the output Arrays are not equal and similarly if we add extra 0 also then also it will show the arrays to be not equal
+
+Sorting Array: Job ( Tim Buchalka)
+public static void main(String[] args) {
+   int [] unsortedArray = getRandomArray(5);
+   System.out.println(Arrays.toString(unsortedArray));
+   int[] sortedArray = sortIntegers(new int[] {7, 30, 35});
+   System.out.println((Arrays.toString(sortedArray)));
+}
+
+private static int[] sortIntegers(int[] array){
+        System.out.println((Arrays.toString(array)));
+        int [] sortedArray = Arrays.copyOf(array, array.length);
+        boolean flag = true;
+        int temp;
+        while (flag){
+            flag = false;
+            for (int i = 0; i < sortedArray.length - 1; i++){
+                if(sortedArray[i] < sortedArray[i + 1]){
+                    temp = sortedArray[i];
+                    sortedArray[i] = sortedArray[i+1];
+                    sortedArray[i+1] = temp;
+                    flag = true;
+                    System.out.println("----->" + Arrays.toString(sortedArray));
+                }
+            }
+            System.out.println("----->" + Arrays.toString(sortedArray));
+        }
+        return sortedArray;
+    }
+
+output : 
+[7, 30, 35]
+----->[30, 7, 35]
+----->[30, 35, 7]
+----->[30, 35, 7]
+----->[35, 30, 7]
+----->[35, 30, 7]
+----->[35, 30, 7]
+[35, 30, 7]
+Reference type to Value type: Job ( Tim Buchalka)
+int [] myIntArray = new Int[5]; int [] anotherArray = myIntArray
+
+now both the arrays are pointing to the same memory location anotherArray[0] = 1 if we try to print System.out.println(Arrays.ToString(myIntArray)) and System.out.println(Arrays.ToString(anotherArray)) they will show same output [1,0,0,0,0]
+
+modifyArray(myIntArray) private static void modifyArray(int[] Array){ Array[1] = 2; will print [1,2,0,0,0] now all the three array pointing to the same address. we are getting the copy of address
+
+Replacing public static void main(String[] args ) with String… args: Job ( Tim Buchalka)
+String[] SplitStrings = “Hello World Again”.split(regex:” “); print text(SplitStrings)
+
+printText(…textList: “Hello”, “World”, “Again”);
+
+private static void printText(String… textList){. for(String t : textList){. System.out.println(t); }
+
+String[] sArray = {“first”, “Second”}; System.out.println(String.join(delimiter: ‘,’, sArray); output : first Second
+
+Finding Minimum: Job ( Tim Buchalka)
+private static int[] readIntegers() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enterst of integers, seperated by commas:");
+        String input = scanner.nextLine();
+
+        String[] splits = input.split(",");
+        int[] values = new int[splits.length];
+        for(int i = 0; i < splits.length; i++) {
+            values[i] = Integer.parseInt(splits[i].trim());
+            System.out.println(Arrays.toString(values));
+        }
+        return values;
+}
+
+private static int findMin(int[] array){
+    int min = Integer.MAX_VALUE;
+    System.out.println("test" + min);
+    for(int el : array){
+        if(el < min){
+            min = el;
+            System.out.println("test" + min);
+        }
+    }
+    return  min;
+}
+Reverse Array: Job ( Tim Buchalka)
+Here when we are reversing 1 2 3 4 5 . we are swapping 1 and 5 and 2 and 3 that’s it and it will reverse
+
+public static void reverse(int [] array){. int maxIndex = array.length – 1 ; half length = array.length/2. for(int i = 0; I < halflength ; I++) { int temp = array[I]; array[I] = array[maxIndex – i] ; array [maxIndex – i] = temp }
+
+Reverse Array: Job ( Tim Buchalka)
+private static int[] reverseCopy(int[] array){
+
+int [] reversedArray = new int[array.length];
+
+int maxIndex = array.length – 1;
+
+for(int el : array) {
+
+reversedArray[maxIndex–] = el;
+
+}
+
+return reversedArray;
+
+}
+
+Two dimensional Array: Job ( Tim Buchalka)
+int [][] array2 = new int[4][4]
+
+System.out.prinlin(Arrays.toString(array2);
+
+for(int [] outer : array2){
+
+System.out.println(outer); //print memory
+
+System.out.println(Arrays.toString(outer));/// print 0.,0
+
+}
+
+for (int I = 0 ;I < array2.length; I++){
+
+var innerArray : int[] = array2[I]
+
+for (int j = 0; j < innerArray.length; j ++) {
+
+System.out.println(array2[I][j])
+
+}
+
+Printing two dimensional array using var: Job ( Tim Buchalka)
+for (var outer : array2){
+
+for (var element : outer) {
+
+System.out.println(element + ” “)
+
+}
+
+}
+
+print two dimensional array: Job ( Tim Buchalka)
+System.out.println(Arrays.deepToString(array2))
+
+we can also initialise a particularly arrays j element in two dimensional array with just
+
+array2[1] = new int[] {10, 20, 30};
+
+System.out.println(Arrays.deepToString(array2)
+
+Multidimensional Array: Job ( Tim Buchalka)
+Object[] anyArray = new Object[3];
+
+System.out.println(Arrays.toString(anyArray));
+
+anyArray[0] = new String[] {“a”, “b”, “c”}
+
+System.out.println(Arrays.deepToString(anyArray));
+
+[[a,b,c], null, null]
+
+anyArray[1] = new String[][] {
+
+{“1”, “2”}, {“3”, “4”, 5″}, {“6”, “7”, “8”, “9”} };
+
+System.out.println(Arrays.deepToString(anyArray));
+
+[[a, b, c], [[1,2], [3,4,5], [6,7,8,9]], null]
+
+anyArray[2] = new int[2][2][2];
+
+System.out.println(Arrays.deepToString(anyArray));
+
+[[a,b,c], [[1,2] , [3,4,5],[6,7,8,9]],[[0,0][0,0][0,0]]
+
+for(Object element : anyArray) {
+
+System.out.println(“Element type = “+ element.getClass().getSimpleName());
+
+System.out.println(“Element toString() = ” +element);
+
+System.out.println(Arrays.deepToString((Object[]) element));
+
+}
+
+Record which acts like class and ArrayList: Job ( Tim Buchalka)
+we are using type record===with three fields=== default constructor is created with all the three fields. but we will create a custom constructor
+
+record GroceryItem(String name, String type, int count){
+
+public GroceryItem(String name) {
+
+this(name, type: “Diary”, count: 1)
+
+}
+
+}
+
+public class Main {
+
+public static void main(String [] args) {
+
+Object [] groceryArray = new Object[3]
+
+groceryArray[0] = new GroceryItem(“milk”);
+
+groceryArray[1] = new GroceryItem(“apples”, “PRODUCE”, 6);
+
+groceryArray[2] = “5 oranges”
+
+System.out.println(Arrays.toString(groceryArray));
+
+}
+
+}
+
+we can do
+
+GroceryItem[] groceryArray = new GroceryItem[3]
+
+we can use array list also
+
+ArrayList objectList = new ArrayList();
+
+objectList.add(new GroceryItem(“butter”))
+
+objectlist.add(“yogurt”);
+
+empty angle bracket is called diamond operator
+
+ArrayList<GroceryItem> groceryList = new ArrayList<>();
+
+groceryList.add(new GroceryItem(“Yogurt”));
+
+Passing String Format and ArrayList.set and ArrayList.add and ArrayList.remove: Job ( Tim Buchalka)
+record GroceryItem(String name, String type, int count){
+
+public GroceryItem(String name) {
+
+this(name, type: “Diary”, count: 1)
+
+}
+
+public String toString() {
+
+return String.format(“%d %s in %s”, count, name.toUpperCase(), type);
+
+}
+
+}
+
+public class Main {
+
+public static void main(String [] args) {
+
+ArrayList<GroceryItem> groceryList = new ArrayList<>();
+
+groceryList.add(new GroceryItem(“Yogurt”));
+
+groceryList.add(0, new GroceryItem(“Yogurt”,”Produce”,5))
+
+this will set the at 0th location of GroceryList
+
+groceryList.set(0, new GroceryItem(“Yogurt”,”Produce”,5))
+
+to remove the item from Grocery List use
+
+groceryList.remove(index: 1)
+
+}
+
+}
+
+ArrayList , List.of(factory method which returns a class static method) and ArrayList.addAll(): Job ( Tim Buchalka)
+String[] items = [“apples”, “bananas”, “milk”, “eggs”];
+
+//method on list which is factory method which calls static method on class and it returns a new instance of something
+
+List <String> list = List.of(items);
+
+System.out.println(list);
+
+System.out.println(list.getClass().getName()) ; //this will show immutable class
+
+list.add(“Yogurt”); // will give an error
+
+ArrayList<String> groceries = new ArrayList<>(list);
+
+printing groceries will print [“apples, bananas, milk, eggs]
+
+groceries.add(“Yogurt”) // will add groceries in the list
+
+another way to populate ArrayList
+
+ArrayList<String> nextList = new ArrayList<>( List.of(“pickles”, “mustard”, “cheese”))
+
+System.out.println(nextList);
+
+will print pickles, mustard, cheese
+
+groceries.addAll(nextList) // will print apples, bananas , milk, eggs, pickles, mustard, cheese
+
+indexOf and lastIndexOf and remove: Job ( Tim Buchalka)
+groceries.indexOf(“yogurt”) // find the first index of the text
+
+groceries.lastIndexOf(“yogurt”) // find the last index of the text
+
+groceries.remove(index: 1) // removes the element at index 1
+
+groceries.remove(“yogurt”) // passing the string value
+
+groceries.removeAll(list.of(“apples”, “eggs”)); // removing multiple items
+
+groceries.retainAll(list.of(“apples”,”milk”,”custard”,”cheese”))
+
+keep this values and remove other which is provided by temporary list
+
+groceries. clear() // to remove all the items from the list
+
+groceries.addAll(list.of(“apples”,”milk”,”custard”,”cheese”));
+
+groceries.addAll(Arrays.asList(“eggs”,”pickles”,”mustard”, “ham”);
+
+To sort
+
+groceries.sort(Comparator.naturalOrder())
+
+groceries.sort(Comparator.reverseOrder())
+
+to copy an array of same size as groceries
+
+var groceryArray = groceries.toArray(new String[groceries.size()]);
+
+System.out.println(Arrays.toString(groceryArray))
+
+String [] originalArray = new String[] {“First”, “Second”, “Third”}
+
+var originalList = Arrays.asList(originarArray);
+
+System.out.println(“list: ” + originalList);
+
+System.out.println(“array: ” +Arrays.toString(originalArray));
+
+Using ArrayList, Comparator, Scanner, Sorting, how to use “”” “””, Switch, Integer.parseInt, IndexOf, scanner.nextLine(): Job ( Tim Buchalka)
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Main {
+
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        boolean flag = true;
+        ArrayList<String> groceries = new ArrayList<>();
+
+        while(flag){
+            printActions();
+            switch(Integer.parseInt(scanner.nextLine())){
+                case 1 -> addItems(groceries);
+                default -> flag = false;
+            }
+            groceries.sort(Comparator.naturalOrder());
+            System.out.println(groceries);
+        }
+    }
+
+    private  static  void addItems(ArrayList<String> groceries) {
+        System.out.println("Add item(s) [seperate items by comma];");
+        String[] items = scanner.nextLine().split(",");
+
+        for (String i: items){
+            String trimmed = i.trim();
+            if(groceries.indexOf(trimmed) < 0) {
+                groceries.add(trimmed);
+            }
+        }
+    }
+    private static void printActions() {
+        String textBlock = """
+                Available actions:
+                
+                0 - to shutdown
+                
+                1 - to add item(s) to list (comma delimited list)
+                
+                2 - to remove any items (comma delimited list) 
+                
+                Enter a number for which action you want to do:""";
+
+        System.out.println( textBlock + " ");
+    }
+}
+
+this program will execute when entering the value 1 and will add the value [eggs, milk ] and if added duplicates then it will remove it 
+
+LinkedList: Job ( Tim Buchalka)
+LinkedList<String> placesToVisit = new LinkedList<>();
+or 
+var placesToVisit = new LinkedList<String>();
+placesToVisit.add("Sydney");
+placesToVisit.add(index: 0, "Canberra"))
+System.out.println(placesToVisit)
+output : Canberra, Sydney
+placesToVisit.addFirst("Darwin")--- inserts element at the first
+placesToVisit.addLast("Whole") --- inserts element at end
+Queue Methods
+placesToVisit.offer("Melbourne") -- adds at the end
+placesToVisit.offerFirst("Test") -- add the the front
+placesToVisit.offerLast("Test") -- add at the end
+Stack Methods
+placesToVisit.push("Test"); -- at the top
+Remove methods
+placesToVisit.remove(index:4) -- remove by index
+placesToVisit.remove("Brisbane") -- remove by text
+String s1 = placesToVisit.remove() -- removes first element and gives that element to s1
+String s2 = placesToVisit.removeFirst() -- removes the first element and gives that element to s2
+String s3 = placesToVisit.removeLast()
+Queue/dequeue poll methods
+String p1 = placesToVisit.poll() -- removes first element
+String p2 = placesToVisit.pollFirst() 
+String p3 = placesToVisit.pollLast()
+Linked List Retrieval Methods: Job ( Tim Buchalka)
+LinkedList<String> list;
+list.get(4) // will get the fifth element of linked list
+list.getFirst() // will get the first element
+list.getLast() // will get the last element
+list.indexOf("Darwin") // will get the index of darwin
+Queue Retrieval method
+list.element() // as FIFO will get the first element
+Stack Retrieval Methods
+list.peek() // will return the first element of stack
+list.peekFirst() // will return the first element of stack
+list.peekLast() // will return the last element of stack
+Looping through the list
+for ( int i = 1; i < list.size(); i++)
+System.out.println("--> From: " + list.get(i-1) + "to" + list.get(i) )
+String previousTown = list.getFirst()
+for (String town : list) {
+System.out.println("---> From: " + PreviousTown + "to" + town)
+ previousTown = town
+}
+List Iterator: Job ( Tim Buchalka)
+ListIterator<String> iterator = list.listIterator()
+while (iterator.hasNext()){
+var town = iterator.next()
+}
+or
+ListIterator<String> iterator = list.listIterator(index: 1)
+Linked List Example: Job ( Tim Buchalka)
+import java.util.LinkedList;
+
+record Place(String name, int distance){
+
+    @Override
+    public String toString() {
+        return String.format("%s (%d)", name, distance);
+    }
+}
+
+public  class Main {
+    public  static  void main(String[] args){
+        LinkedList<Place> placesToVisit = new LinkedList<>();
+
+        Place adelaide = new Place("Adelaide", 1374);
+        addPlace(placesToVisit,adelaide);
+        addPlace(placesToVisit,new Place("Adelaide", 1374));
+        addPlace(placesToVisit, new Place("Brisbane", 917));
+        addPlace(placesToVisit, new Place("Perth", 3923));
+        addPlace(placesToVisit, new Place("Alice Springs", 2771));
+        addPlace(placesToVisit, new Place("Darwin", 3972));
+        System.out.println(placesToVisit);
+    }
+    private static void addPlace(LinkedList<Place> list, Place place){
+        if(list.contains(place)){
+            System.out.println("Found duplicate" + place);
+            return;
+        }
+        for(Place p : list){
+            if(p.name().equalsIgnoreCase(place.name())){
+                System.out.println("Found duplicate: " + place);
+                return;
+            }
+        }
+        int matchedIndex = 0;
+        for (var listPlace: list) {
+            if (place.distance() < listPlace.distance()){
+                list.add(matchedIndex, place);
+                return;
+            }
+            matchedIndex++;
+        }
+        list.add(place);
+    }
+}
+
+output Found duplicateAdelaide (1374)
+[Brisbane (917), Adelaide (1374), Alice Springs (2771), Perth (3923), Darwin (3972)]
+Linked List Moving forward and Backward: Job ( Tim Buchalka)
+import java.util.LinkedList;
+import java.util.Scanner;
+
+record Place(String name, int distance){
+
+    @Override
+    public String toString() {
+        return String.format("%s (%d)", name, distance);
+    }
+}
+
+public  class Main {
+    public  static  void main(String[] args){
+        LinkedList<Place> placesToVisit = new LinkedList<>();
+
+        Place adelaide = new Place("Adelaide", 1374);
+        addPlace(placesToVisit,adelaide);
+        addPlace(placesToVisit,new Place("Adelaide", 1374));
+        addPlace(placesToVisit, new Place("Brisbane", 917));
+        addPlace(placesToVisit, new Place("Perth", 3923));
+        addPlace(placesToVisit, new Place("Alice Springs", 2771));
+        addPlace(placesToVisit, new Place("Darwin", 3972));
+        System.out.println(placesToVisit);
+
+        var iterator = placesToVisit.listIterator();
+        Scanner scanner = new Scanner(System.in);
+        boolean quitLoop = false;
+        boolean forward = true;
+
+        printMenu();
+
+        while (!quitLoop){
+            if(!iterator.hasPrevious()){
+                System.out.println("Originating : " +iterator.next());
+                forward = true;
+            }
+            if(!iterator.hasNext()){
+                System.out.println("Final : " +iterator.previous());
+                forward = false;
+            }
+            System.out.print("Enter Value: ");
+            String menuItem = scanner.nextLine().toUpperCase().substring(0,1);
+            switch (menuItem){
+                case "F":
+                    System.out.println("User wants to go forward");
+                    if(!forward){
+                        forward = true;
+                        if(iterator.hasNext()){
+                            iterator.next();
+                        }
+                    }
+                    if(iterator.hasNext()) {
+                        System.out.println(iterator.next());
+                    }
+                    break;
+                case "B":
+                    System.out.println("User wants to go backward");
+                    if(forward){
+                        forward = false;
+                        if(iterator.hasPrevious()){
+                            iterator.previous();
+                        }
+                    }
+                    if(iterator.hasPrevious()) {
+                        System.out.println(iterator.previous());
+                    }
+                    break;
+                case "M":
+                    printMenu();
+                    break;
+                case "L":
+                    System.out.println(placesToVisit);
+                    break;
+                default:
+                    quitLoop = true;
+                    break;
+            }
+        }
+
+    }
+    private static void addPlace(LinkedList<Place> list, Place place){
+        if(list.contains(place)){
+            System.out.println("Found duplicate" + place);
+            return;
+        }
+        for(Place p : list){
+            if(p.name().equalsIgnoreCase(place.name())){
+                System.out.println("Found duplicate: " + place);
+                return;
+            }
+        }
+        int matchedIndex = 0;
+        for (var listPlace: list) {
+            if (place.distance() < listPlace.distance()){
+                list.add(matchedIndex, place);
+                return;
+            }
+            matchedIndex++;
+        }
+        list.add(place);
+    }
+    private static void printMenu() {
+        System.out.println("""
+            Available actions (select word or letter)
+            (F)orward
+            (B)ackwards
+            (L)ist Places
+            (M)enu
+            (Q)uit""");
+    }
+}
+Autoboxing And Unboxing: Job ( Tim Buchalka)
+Integer boxedInt = Integer.valueOf(I:15) ==== (boxing)
+
+Integer autoBoxed =  15; (Autoboxing)
+
+int autoUnboxed = autoboxed (unboxing)
+
+Autoboxing is where java automatically boxes a primitive type for you
+
+Integer is wrapper variable
+
+int is primitive type
+System.out.println(autoBoxed.getClass().getName())
+
+Double resultBoxed = Double.valueOf(100.0) === boxing 
+AutoBoxing: Job ( Tim Buchalka)
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Integer[] wrapperArray = new Integer[5];
+        wrapperArray[0] = 50;
+        System.out.println(Arrays.toString(wrapperArray));
+        System.out.println(wrapperArray[0].getClass().getName());
+
+        Character[] characterArray = {'a', 'b', 'c', 'd'};
+        System.out.println(Arrays.toString(characterArray));
+
+        var ourList = getList(1,2,3,4,5);
+        System.out.println(ourList);
+
+        // to find the what type of var is it
+        // go to IntelliJ Idea -> Settings -> type Inlay -> Types -> CheckBox Java
+
+    }
+
+    private  static ArrayList<Integer> getList(int... varargs){
+
+        ArrayList<Integer> aList = new ArrayList<>();
+        for(int i: varargs) {
+            aList.add(i);
+        }
+        return  aList;
+    }
+}
+
+In this case it compiles successfully Here we are using Integer instead of int and it is doing Autoboxing
+ private  static ArrayList<Integer> getList(Integer... varargs){
+
+        ArrayList<Integer> aList = new ArrayList<>();
+        for(int i: varargs) {
+            aList.add(i);
+        }
+        return  aList;
+    }
+}
+
+var ourList = List.of(1,2,3,4,5)
